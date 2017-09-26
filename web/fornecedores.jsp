@@ -5,7 +5,7 @@
     <%@include file="WEB-INF/jspf/header.jspf" %>
     <%@include file="WEB-INF/jspf/menu.jspf" %>
      <div class="content-wrapper">
-         <center><h1>Cadastro de Fornecedores</h1></center>
+         <center><h1>Cadastro de Fornecedores</h1>
         <% 
             try{
             if(request.getParameter("remove")!=null){
