@@ -50,6 +50,7 @@
          }
             
             }catch(Exception ex){%>
+            <div>O form está preenchido incorretamente</div>
         <%}%>
   <div class="container">
     <div class="card card-register mx-auto mt-5">
@@ -58,17 +59,17 @@
         <form>
           <div class="form-group">
             <label for="exampleInputEmail1">Nome</label>
-            <input class="form-control" type="text" name="nome"/>
+            <input class="form-control" type="text" name="nome" required/>
           </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputName">Razão Social</label>
-                <input class="form-control" type="text" name="razao"/>
+                <input class="form-control" type="text" name="razao"required/>
               </div>
               <div class="col-md-6">
                 <label for="exampleInputLastName">CNPJ</label>
-                <input class="form-control" type="text" name="cnpj"/>
+                <input class="form-control" type="text" name="cnpj "pattern="\d{2}.\d{3}.\d{3}\/\d{4}-\d{2}"placeholder="Ex.: 00.000.000/0000-00" maxlength="18"required/>
               </div>
             </div>
           </div>
@@ -80,7 +81,7 @@
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputPassword1">Telefone</label>
-                <input class="form-control" type="text" name="tel"/>
+                <input class="form-control phone-ddd-mask" maxlength="13"placeholder="Ex.: (00) 0000-0000" pattern="\(\d{2}\)\d{4}-\d{4}" type="text" name="tel"/>
               </div>
               <div class="col-md-6">
                 <label for="exampleConfirmPassword">Endereço</label>
@@ -171,10 +172,10 @@
                         <form>
                         <td><%=i%></td>
                         <td><input type="text" name="nome" size="5" value="<%=c.getNome()%>"></cd>
-                        <td><input type="text" name="cpf" size="6" value="<%=c.getCnpj()%>"></td>
-                        <td><input type="text" name="rg" size="6" value="<%=c.getRazao()%>"></td>
+                        <td><input type="text" name="cnpj" pattern="\d{2}.\d{3}.\d{3}\/\d{4}-\d{2}"placeholder="Ex.: 00.000.000/0000-00" maxlength="18"required size="6" value="<%=c.getCnpj()%>"></td>
+                        <td><input type="text" name="razao" size="6" value="<%=c.getRazao()%>"></td>
                         <td><input type="text" name="email" size="6" value="<%=c.getEmail()%>"></td>
-                        <td><input type="number" name="tel" value="<%=c.getTel()%>"></td>
+                        <td><input type="text" name="tel" maxlength="13"placeholder="Ex.: (00) 0000-0000" pattern="\(\d{2}\)\d{4}-\d{4}" value="<%=c.getTel()%>"></td>
                         <td><input type="text" name="ender" size="6" value="<%=c.getEnder()%>"/></td>
                         <input type="hidden" name="index" value="<%=i%>"/>
                         <td><input type="submit" value="Salvar" name="salvar"</td>

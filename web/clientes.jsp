@@ -50,6 +50,7 @@
          }
           
             }catch(Exception ex){%>
+            <div>O form está preenchido incorretamente</div>
         <%}%>
     <div class="container">
     <div class="card card-register mx-auto mt-5">
@@ -58,17 +59,17 @@
         <form>
           <div class="form-group">
             <label for="exampleInputEmail1">Nome</label>
-            <input class="form-control" type="text" name="nome">
+            <input class="form-control" type="text" name="nome"required>
           </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputName">CPF</label>
-                <input class="form-control cpf-mask" type="number" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"name="cpf">
+                <input class="form-control cpf-mask" type="text"maxlength="14" placeholder="Ex.: 000.000.000-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"name="cpf"required>
               </div>
               <div class="col-md-6">
                 <label for="exampleInputLastName">RG</label>
-                <input class="form-control" type="text" name="rg" >
+                <input class="form-control" type="text" name="rg">
               </div>
             </div>
           </div>
@@ -80,7 +81,7 @@
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputPassword1">Telefone</label>
-                <input class="form-control phone-ddd-mask" type="number" name="tel"/>
+                <input class="form-control phone-ddd-mask" maxlength="13"placeholder="Ex.: (00) 0000-0000" pattern="\(\d{2}\)\d{4}-\d{4}" type="text" name="tel"/>
               </div>
               <div class="col-md-6">
                 <label for="exampleConfirmPassword">Endereço</label>
@@ -114,7 +115,7 @@
        </tr>
               </thead>
               <tbody>
-        
+
         <%if(request.getParameter("alterar") == null) {
         for (int i=0; i<Cliente.getList().size(); i++){%>
         <%Cliente c= Cliente.getList().get(i);
@@ -171,10 +172,10 @@
                         <form>
                         <td><%=i%></td>
                         <td><input type="text" name="nome" size="5" value="<%=c.getNome()%>"></cd>
-                        <td><input type="text" name="cpf" size="6" value="<%=c.getCpf()%>"></td>
+                        <td><input type="text" maxlength="14" placeholder="Ex.: 000.000.000-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"name="cpf"required size="6" value="<%=c.getCpf()%>"></td>
                         <td><input type="text" name="rg" size="6" value="<%=c.getRg()%>"></td>
                         <td><input type="text" name="email" size="5" value="<%=c.getEmail()%>"></td>
-                        <td><input type="number" name="tel" value="<%=c.getTel()%>"></td>
+                        <td><input type="text" name="tel" maxlength="13" placeholder="Ex.: (00) 0000-0000" pattern="\(\d{2}\)\d{4}-\d{4}"value="<%=c.getTel()%>"></td>
                         <td><input type="text" name="ender" size="6" value="<%=c.getEnder()%>"/></td>
                         <input type="hidden" name="index" value="<%=i%>"/>
                         <td><input type="submit" value="Salvar" name="salvar"</td>
