@@ -8,10 +8,7 @@
          <center><h1>Cadastro de Clientes</h1>
         <% 
             try{
-            if(request.getParameter("remove")!=null){
-                int i=Integer.parseInt(request.getParameter("index"));
-                Cliente.getList().remove(i);}
-            else if((request.getParameter("add")!=null)){
+                if((request.getParameter("add")!=null)){
                 String nome= request.getParameter("nome");
                 String cpf =request.getParameter("cpf");
                 String rg =request.getParameter("rg");
@@ -29,6 +26,29 @@
                 response.sendRedirect(request.getRequestURI());
             }
             
+                else if(request.getParameter("remover")!=null){
+                int i=Integer.parseInt(request.getParameter("index"));
+                Cliente.getList().remove(i);}
+           
+            else if (request.getParameter("salvar") != null) { 
+             int index = Integer.parseInt(request.getParameter("index"));
+             String nome = request.getParameter("nome");
+             String cpf = request.getParameter("cpf");
+             String rg = request.getParameter("rg");
+             String email = request.getParameter("email");
+             String tel =request.getParameter("tel");
+             String ender = request.getParameter("ender");
+             Cliente c = new Cliente();   
+             c.setNome(nome);
+             c.setCpf(cpf); 
+             c.setRg(rg); 
+             c.setEmail(email); 
+             c.setTel(tel); 
+             c.setEnder(ender);
+             Cliente.getList().set(index,c);
+               
+         }
+          
             }catch(Exception ex){%>
         <%}%>
     <div class="container">
@@ -44,7 +64,7 @@
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputName">CPF</label>
-                <input class="form-control" type="text" name="cpf">
+                <input class="form-control cpf-mask" type="number" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"name="cpf">
               </div>
               <div class="col-md-6">
                 <label for="exampleInputLastName">RG</label>
@@ -60,7 +80,7 @@
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputPassword1">Telefone</label>
-                <input class="form-control" type="text" name="tel"/>
+                <input class="form-control phone-ddd-mask" type="number" name="tel"/>
               </div>
               <div class="col-md-6">
                 <label for="exampleConfirmPassword">Endereço</label>
@@ -94,9 +114,12 @@
        </tr>
               </thead>
               <tbody>
-        <%try{%>
-        <%int i=0;%>
-        <%for(Cliente c: Cliente.getList()){%>
+        
+        <%if(request.getParameter("alterar") == null) {
+        for (int i=0; i<Cliente.getList().size(); i++){%>
+        <%Cliente c= Cliente.getList().get(i);
+        %>
+        <tr>
             <td><%=i%></td>
             <td><%=c.getNome()%></td>
             <td><%=c.getCpf()%></td>
@@ -106,16 +129,59 @@
             <td><%=c.getEnder()%></td>
         <td>
         <form>
-            <input type="hidden" name="index" value="<%=(i++)%>"/>
-            <input type="submit" name="remove" value="Excluir"/>
+            <input type="hidden" name="index" value="<%=i%>"/>
+            <input type="submit" name="remover" value="Excluir"/>
         </form>
         </td>
-           <%}%>
-        <%}catch(Exception ex){%>
-            <td colspan="5">
-                Erro ao carregar a lista<%=ex.getMessage()%>
-            </td>
-            <%}%>
+        <td>
+            <form>
+                <input type="hidden" name="index" value="<%=i%>"/>
+                <input type="submit" name="alterar" value="Alterar"/>
+            </form> 
+        </td>
+        </tr>
+        <%}}
+        else {
+            for (int i=0; i<Cliente.getList().size(); i++){
+                Cliente c = Cliente.getList().get(i);
+                if(i != Integer.parseInt(request.getParameter("index"))){%>
+                    <tr>
+                        <td><%=i%></td>
+                        <td><%=c.getNome()%></td>
+                        <td><%=c.getCpf()%></td>
+                        <td><%=c.getRg()%></td>
+                        <td><%=c.getEmail()%></td>
+                        <td><%=c.getTel()%></td>
+                        <td><%=c.getEnder()%></td>             
+                    <td>
+                        <form>
+                            <input type="hidden" name="index" value="<%=i%>"/>
+                            <input type="submit" name="remover" value="Excluir"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form>
+                            <input type="hidden" name="index" value="<%=i%>"/>
+                            <input type="submit" name="alterar" value="Alterar"/>
+                        </form>
+                    </td>
+                    </tr>
+                    <%}else {%>
+                    <tr>
+                        <form>
+                        <td><%=i%></td>
+                        <td><input type="text" name="nome" value="<%=c.getNome()%>"></cd>
+                        <td><input type="text" name="cpf" value="<%=c.getCpf()%>"></td>
+                        <td><input type="text" name="rg" value="<%=c.getRg()%>"></td>
+                        <td><input type="text" name="email" value="<%=c.getEmail()%>"></td>
+                        <td><input type="number" name="tel" value="<%=c.getTel()%>"></td>
+                        <td><input type="text" name="ender" value="<%=c.getEnder()%>"/></td>
+                        <input type="hidden" name="index" value="<%=i%>"/>
+                        <td><input type="submit" value="Salvar" name="salvar"</td>
+                        </form>
+                    </tr>
+                            
+        <%}}}%>
               </tbody>
               <tfoot>
                 <tr>

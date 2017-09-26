@@ -8,10 +8,8 @@
          <center><h1>Cadastro de Fornecedores</h1>
         <% 
             try{
-            if(request.getParameter("remove")!=null){
-                int i=Integer.parseInt(request.getParameter("index"));
-                Fornecedor.getList().remove(i);}
-            else if((request.getParameter("add")!=null)){
+                
+            if((request.getParameter("add")!=null)){
                 String nome= request.getParameter("nome");
                 String razao =request.getParameter("razao");
                 String cnpj =request.getParameter("cnpj");
@@ -28,6 +26,28 @@
                 Fornecedor.getList().add(c);
                 response.sendRedirect(request.getRequestURI());
             }
+            else if(request.getParameter("remove")!=null){
+                int i=Integer.parseInt(request.getParameter("index"));
+                Fornecedor.getList().remove(i);}
+            
+             else if (request.getParameter("salvar") != null) { 
+             int index = Integer.parseInt(request.getParameter("index"));
+             String nome= request.getParameter("nome");
+                String razao =request.getParameter("razao");
+                String cnpj =request.getParameter("cnpj");
+                String email =request.getParameter("email");
+                String tel =request.getParameter("tel");
+                String ender =request.getParameter("ender");
+                Fornecedor c=new Fornecedor();
+                c.setNome(nome);
+                c.setRazao(razao); 
+                c.setCnpj(cnpj); 
+                c.setEmail(email); 
+                c.setTel(tel); 
+                c.setEnder(ender);
+                Fornecedor.getList().set(index,c);
+               
+         }
             
             }catch(Exception ex){%>
         <%}%>
@@ -38,17 +58,17 @@
         <form>
           <div class="form-group">
             <label for="exampleInputEmail1">Nome</label>
-            <input class="form-control" type="text" name="nome">
+            <input class="form-control" type="text" name="nome"/>
           </div>
           <div class="form-group">
             <div class="form-row">
               <div class="col-md-6">
                 <label for="exampleInputName">Razão Social</label>
-                <input class="form-control" type="text" name="razao">
+                <input class="form-control" type="text" name="razao"/>
               </div>
               <div class="col-md-6">
                 <label for="exampleInputLastName">CNPJ</label>
-                <input class="form-control" type="text" name="cnpj" >
+                <input class="form-control" type="text" name="cnpj"/>
               </div>
             </div>
           </div>
@@ -94,9 +114,12 @@
        </tr>
               </thead>
               <tbody>
-        <%try{%>
-        <%int i=0;%>
-        <%for(Fornecedor c: Fornecedor.getList()){%>
+                  
+        <%if(request.getParameter("alterar") == null) {
+        for (int i=0; i<Fornecedor.getList().size(); i++){%>
+        <%Fornecedor c= Fornecedor.getList().get(i);
+        %>
+        <tr>
             <td><%=i%></td>
             <td><%=c.getNome()%></td>
             <td><%=c.getRazao()%></td>
@@ -106,16 +129,59 @@
             <td><%=c.getEnder()%></td>
         <td>
         <form>
-            <input type="hidden" name="index" value="<%=(i++)%>"/>
+            <input type="hidden" name="index" value="<%=i%>"/>
             <input type="submit" name="remove" value="Excluir"/>
         </form>
         </td>
-           <%}%>
-        <%}catch(Exception ex){%>
-            <td colspan="5">
-                Erro ao carregar a lista<%=ex.getMessage()%>
-            </td>
-            <%}%>
+        <td>
+            <form>
+                <input type="hidden" name="index" value="<%=i%>"/>
+                <input type="submit" name="alterar" value="Alterar"/>
+            </form> 
+        </td>
+        </tr>
+         <%}}
+        else {
+            for (int i=0; i<Fornecedor.getList().size(); i++){
+              Fornecedor c = Fornecedor.getList().get(i);
+                if(i != Integer.parseInt(request.getParameter("index"))){%>
+                    <tr>
+                        <td><%=i%></td>
+                        <td><%=c.getNome()%></td>
+                        <td><%=c.getCnpj()%></td>
+                        <td><%=c.getRazao()%></td>
+                        <td><%=c.getEmail()%></td>
+                        <td><%=c.getTel()%></td>
+                        <td><%=c.getEnder()%></td>             
+                    <td>
+                        <form>
+                            <input type="hidden" name="index" value="<%=i%>"/>
+                            <input type="submit" name="remover" value="Excluir"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form>
+                            <input type="hidden" name="index" value="<%=i%>"/>
+                            <input type="submit" name="alterar" value="Alterar"/>
+                        </form>
+                    </td>
+                    </tr>
+                    <%}else {%>
+                    <tr>
+                        <form>
+                        <td><%=i%></td>
+                        <td><input type="text" name="nome" value="<%=c.getNome()%>"></cd>
+                        <td><input type="text" name="cpf" value="<%=c.getCnpj()%>"></td>
+                        <td><input type="text" name="rg" value="<%=c.getRazao()%>"></td>
+                        <td><input type="text" name="email" value="<%=c.getEmail()%>"></td>
+                        <td><input type="number" name="tel" value="<%=c.getTel()%>"></td>
+                        <td><input type="text" name="ender" value="<%=c.getEnder()%>"/></td>
+                        <input type="hidden" name="index" value="<%=i%>"/>
+                        <td><input type="submit" value="Salvar" name="salvar"</td>
+                        </form>
+                    </tr>
+                            
+        <%}}}%>
               </tbody>
               <tfoot>
                 <tr>
