@@ -2,12 +2,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Clientes</title>
-    </head>
-    <body>
-        <h1>Cadastro de clientes</h1>
+    <%@include file="WEB-INF/jspf/header.jspf" %>
+    <%@include file="WEB-INF/jspf/menu.jspf" %>
+     <div class="content-wrapper">
+         <center><h1>Cadastro de Clientes</h1>
         <% 
             try{
             if(request.getParameter("remove")!=null){
@@ -33,40 +31,72 @@
             
             }catch(Exception ex){%>
         <%}%>
-        <h2>Novo contato</h2>
+    <div class="container">
+    <div class="card card-register mx-auto mt-5">
+      <div class="card-header">Registrar Cliente</div>
+      <div class="card-body">
         <form>
-            Nome:<br/>
-            <input type="text" name="nome"/></br>
-            Cpf:<br/>
-            <input type="text" name="cpf"/><br>
-            Rg:<br/>
-            <input type="text" name="rg"/></br>
-            Email:<br/>
-            <input type="text" name="email"/></br>
-            Telefone:<br/>
-            <input type="text" name="tel"/><br/>
-            Endereço:<br/>
-            <input type="text" name="ender"/><br/>
-            <input type="submit" name="add" value="adcionar"/>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Nome</label>
+            <input class="form-control" type="text" name="nome">
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="exampleInputName">CPF</label>
+                <input class="form-control" type="text" name="cpf">
+              </div>
+              <div class="col-md-6">
+                <label for="exampleInputLastName">RG</label>
+                <input class="form-control" type="text" name="rg" >
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">E-mail</label>
+            <input class="form-control" type="text" name="email"/>
+          </div>
+          <div class="form-group">
+            <div class="form-row">
+              <div class="col-md-6">
+                <label for="exampleInputPassword1">Telefone</label>
+                <input class="form-control" type="text" name="tel"/>
+              </div>
+              <div class="col-md-6">
+                <label for="exampleConfirmPassword">Endereço</label>
+                <input class="form-control" type="text" name="ender"/>
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="btn btn-primary btn-block" name="add" value="Registrar"/>
         </form>
+      </div>
+    </div>
+  </div><br/><br/>
         
-        <table border ="1">
-            <tr>
-                <th>índice</th>
-                <th>Nome</th>
-                <th>Cpf</th>
-                <th>Rg</th>
-                <th>Email</th>
-                <th>Telefone</th>
-                <th>Endereço</th>
-                <th>Exclusão</th>
-                <th>Alterar</th>
-            </tr>
-        <h2>lista</h2>
+        <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-table"></i>Lista de Cliente</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+ 		<tr>
+                  <th>Índice</th>
+                  <th>Nome</th>
+                  <th>CPF</th>
+                  <th>RG</th>
+                  <th>E-mail</th>
+                  <th>Telefone</th>
+                  <th>Endereço</th>
+                  <th>Exclusão</th>
+                  <th>Alteração</th>
+       </tr>
+              </thead>
+              <tbody>
         <%try{%>
         <%int i=0;%>
         <%for(Cliente c: Cliente.getList()){%>
-        <tr>
             <td><%=i%></td>
             <td><%=c.getNome()%></td>
             <td><%=c.getCpf()%></td>
@@ -80,15 +110,30 @@
             <input type="submit" name="remove" value="Excluir"/>
         </form>
         </td>
-        </tr>
-        <%}%>
+           <%}%>
         <%}catch(Exception ex){%>
-        <tr>
             <td colspan="5">
                 Erro ao carregar a lista<%=ex.getMessage()%>
             </td>
             <%}%>
-        </table>
-        </table>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Índice</th>
+                  <th>Nome</th>
+                  <th>CPF</th>
+                  <th>RG</th>
+                  <th>E-mail</th>
+                  <th>Telefone</th>
+                  <th>Endereço</th>
+                  <th>Exclusão</th>
+                  <th>Alteração</th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+    </div>
+        <%@include file="WEB-INF/jspf/footer.jspf" %>
     </body>
 </html>
