@@ -170,12 +170,12 @@
                     <tr>
                         <form>
                         <td><%=i%></td>
-                        <td><input type="text" name="nome" value="<%=c.getNome()%>"></cd>
-                        <td><input type="text" name="cpf" value="<%=c.getCpf()%>"></td>
-                        <td><input type="text" name="rg" value="<%=c.getRg()%>"></td>
-                        <td><input type="text" name="email" value="<%=c.getEmail()%>"></td>
+                        <td><input type="text" name="nome" size="5" value="<%=c.getNome()%>"></cd>
+                        <td><input type="text" name="cpf" size="6" value="<%=c.getCpf()%>"></td>
+                        <td><input type="text" name="rg" size="6" value="<%=c.getRg()%>"></td>
+                        <td><input type="text" name="email" size="5" value="<%=c.getEmail()%>"></td>
                         <td><input type="number" name="tel" value="<%=c.getTel()%>"></td>
-                        <td><input type="text" name="ender" value="<%=c.getEnder()%>"/></td>
+                        <td><input type="text" name="ender" size="6" value="<%=c.getEnder()%>"/></td>
                         <input type="hidden" name="index" value="<%=i%>"/>
                         <td><input type="submit" value="Salvar" name="salvar"</td>
                         </form>
